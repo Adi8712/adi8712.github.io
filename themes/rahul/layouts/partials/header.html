@@ -1,0 +1,17 @@
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="{{ .Site.BaseURL }}" class="logo">Tech Talks</a>
+                <div class="search-container">
+                    <input type="text" id="search-input" class="search-bar" autocomplete="off" placeholder="Search...">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+            <div class="header-right">
+                {{- partial "socials.html" . -}}
+                {{- partial "theme-toggle.html" . -}}
+            </div>
+        </div>
+    </div>
+</header>

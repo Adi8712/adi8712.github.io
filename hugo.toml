@@ -1,0 +1,16 @@
+baseURL = "https://adi8712.github.io/"
+languageCode = "en-us"
+title = "Tech Talks"
+theme = "rahul" # huge thanks to Rahul R. Nadkarni ;)
+
+[taxonomies]
+    tag = "tags"
+
+[params]
+    author = "Aditya Kumar Gupta"
+    github = "https://github.com/Adi8712"
+    linkedin = "https://linkedin.com/in/aditya-kgupta"
+    twitter = "https://x.com/aditya-kgupta"
+
+[outputs]
+home = ["HTML", "JSON"]

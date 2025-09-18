@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="container">
+    {{ $pages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections | default .Pages }}
+    {{ with first 1 $pages }}
+        {{ range . }}
+            <div class="featured-post">
+                <div class="featured-image-container">
+                    {{ $image := .Resources.GetMatch "cover.*" }}
+                    {{ if $image }}<a href="{{ .Permalink }}"><img src="{{ $image.Permalink }}" alt="{{ .Title }}"></a>{{ end }}
+                </div>
+                <div class="featured-content">
+                    {{ with .Params.tags }}<span class="post-meta">{{ index . 0 | upper }} / {{ $.Date.Format "Jan 2, 2006" }}</span>{{ end }}
+                    <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+                    <p>{{ .Summary }}</p>
+                    <a href="{{ .Permalink }}" class="read-more">Read more &rarr;</a>
+                </div>
+            </div>
+        {{ end }}
+    {{ end }}
+
+    <nav class="category-nav">
+        <a href="/tags/notes/">Notes</a>
+        {{ $featuredTags := 5 }}
+        {{ range first $featuredTags (where .Site.Taxonomies.tags.ByCount "Term" "ne" "notes") }}
+            <a href="{{ .Page.Permalink }}">{{ .Page.Title | upper }}</a>
+        {{ end }}
+        <a href="/tags/" class="all-tags-link">ALL TAGS &rarr;</a>
+    </nav>
+
+    <div class="post-list">
+        {{ range after 1 $pages }}
+            {{ partial "post-card.html" . }}
+        {{ end }}
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,14 @@
+<div class="post-card">
+    {{ $image := .Resources.GetMatch "cover.*" }}
+    {{ if $image }}
+        <a href="{{ .Permalink }}" class="card-image-link" aria-label="Read more about {{ .Title }}">
+            <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="card-image" loading="lazy">
+        </a>
+    {{ end }}
+    <div class="card-content">
+        {{ with .Params.tags }}
+        <span class="post-meta">{{ index . 0 | upper }} / {{ $.Date.Format "Jan 2, 2006" }}</span>
+        {{ end }}
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    </div>
+</div>

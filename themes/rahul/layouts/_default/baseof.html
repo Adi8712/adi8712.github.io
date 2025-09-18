@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+
+    <meta name="description"
+        content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}">
+
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description"
+        content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{ with .Params.cover }}
+    <meta property="og:image" content="{{ . }}">
+    {{ end }}
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Title }}">
+    <meta name="twitter:description"
+        content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}">
+    {{ with .Params.cover }}
+    <meta name="twitter:image" content="{{ . }}">
+    {{ end }}
+
+
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+            document.documentElement.classList.add(currentTheme + '-mode');
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Source+Serif+Pro:wght@400;600&display=swap"
+        rel="stylesheet">
+    {{ with resources.Get "css/style.css" }}
+    {{ $style := . | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    {{ else }}
+    <link rel="stylesheet" href="/css/style.css">
+    {{ end }}
+
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script defer src="/js/theme.js"></script>
+    <script defer src="/js/search.js"></script>
+</head>
+
+<script>
+    document.addEventListener("scroll", () => {
+        const bar = document.getElementById("progress-bar");
+        const post = document.querySelector(".single-post");
+        if (!bar || !post) return;
+
+        const scrollTop = window.scrollY;
+        const postHeight = post.scrollHeight - window.innerHeight;
+        const progress = Math.min((scrollTop / postHeight) * 100, 100);
+
+        bar.style.width = progress + "%";
+    });
+</script>
+
+
+<body>
+    <div id="progress-bar"></div>
+    {{ partial "header.html" . }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const header = document.querySelector("header");
+            if (!header) return;
+
+            function updateHeaderHeight() {
+                const h = Math.ceil(header.getBoundingClientRect().height);
+                document.documentElement.style.setProperty("--site-header-height", h + "px");
+            }
+
+            updateHeaderHeight();
+
+            let resizeTimer;
+            window.addEventListener("resize", function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(updateHeaderHeight, 150);
+            });
+        });
+    </script>
+
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+</body>
+
+</html>

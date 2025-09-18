@@ -7,7 +7,7 @@
                 {{ with .Params.tags }}
                 <a href="{{ "/tags/" | relLangURL }}{{ index . 0 | urlize }}">{{ index . 0 | upper }}</a> &gt;
                 {{ end }}
-                <span>{{ .Title }}</span>
+                <span title="{{ .Title }}">{{ .Title | truncate 20 }}</span>
             </div>
             <h1>{{ .Title }}</h1>
             <span class="post-meta">{{ .Date.Format "January 2, 2006" }}</span>
@@ -16,7 +16,7 @@
         {{ $image := .Resources.GetMatch "cover.*" }}
         {{ if $image }}
         <div class="post-main-image-container">
-            <img src="{{ $image.Permalink }}" alt="{{ .Title }}" class="post-main-image" loading="lazy">
+            <img src="{{ $image.Permalink }}" alt="Cover image for {{ .Title }}" class="post-main-image" loading="lazy" decoding="async">
         </div>
         {{ end }}
 

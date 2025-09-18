@@ -17,6 +17,12 @@
     {{ with .Params.cover }}
     <meta property="og:image" content="{{ . }}">
     {{ end }}
+    {{ if not .Params.cover }}
+    {{ with resources.Get "images/og-default.png" }}
+    {{ $og := . | fingerprint }}
+    <meta property="og:image" content="{{ $og.RelPermalink }}">
+    {{ end }}
+    {{ end }}
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ .Title }}">
@@ -47,6 +53,8 @@
     {{ else }}
     <link rel="stylesheet" href="/css/style.css">
     {{ end }}
+
+    <link rel="canonical" href="{{ .Permalink }}">
 
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
     <script defer src="/js/theme.js"></script>

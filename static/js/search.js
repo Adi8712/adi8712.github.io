@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
   const resultsContainer = document.getElementById("search-results");
+  if (resultsContainer) {
+    resultsContainer.setAttribute("role", "listbox");
+    resultsContainer.setAttribute("aria-live", "polite");
+  }
 
   if (!searchInput || !resultsContainer) return;
 
@@ -26,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearResults() {
     resultsContainer.innerHTML = "";
     resultsContainer.style.display = "none";
+    searchInput.setAttribute("aria-expanded", "false");
     activeIndex = -1;
     results = [];
   }
@@ -36,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!items || items.length === 0) {
       resultsContainer.style.display = "none";
+      searchInput.setAttribute("aria-expanded", "false");
       return;
     }
 
@@ -43,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("a");
       row.className = "result-item";
       row.setAttribute("role", "option");
+      row.setAttribute("aria-selected", i === activeIndex ? "true" : "false");
       row.setAttribute("tabindex", "-1");
       row.href = r.item.permalink || r.item.permalink || "#";
       row.textContent = r.item.title || "(untitled)";
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     resultsContainer.style.display = "block";
+    searchInput.setAttribute("aria-expanded", "true");
   }
 
   function setActive(index) {

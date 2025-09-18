@@ -10,7 +10,7 @@ theme = "rahul" # huge thanks to Rahul R. Nadkarni ;)
     author = "Aditya Kumar Gupta"
     github = "https://github.com/Adi8712"
     linkedin = "https://linkedin.com/in/aditya-kgupta"
-    twitter = "https://x.com/aditya-kgupta"
+    twitter = "https://x.com/aditya_kgupta"
 
 [outputs]
 home = ["HTML", "JSON"]

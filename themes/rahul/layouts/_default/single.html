@@ -5,7 +5,7 @@
             <div class="breadcrumbs">
                 <a href="/">Blogs</a> &gt;
                 {{ with .Params.tags }}
-                <a href="{{ " /tags/" | relLangURL }}{{ index . 0 | urlize }}">{{ index . 0 | upper }}</a> &gt;
+                <a href="{{ "/tags/" | relLangURL }}{{ index . 0 | urlize }}">{{ index . 0 | upper }}</a> &gt;
                 {{ end }}
                 <span>{{ .Title }}</span>
             </div>

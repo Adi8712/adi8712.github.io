@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.142.0+extended'
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Upload
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./public
+
+      - name: Deploy
+        uses: actions/deploy-pages@v2

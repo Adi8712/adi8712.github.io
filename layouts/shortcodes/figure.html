@@ -1,0 +1,6 @@
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" -}}
+{{- $alt := .Get "alt" | default $title -}}
+{{- $r := resources.Get (strings.TrimPrefix "/" $src) -}}
+{{- $raster := and $r (ne $r.MediaType.SubType "svg") -}}
+<figure><img src="{{ with $r }}{{ .RelPermalink }}{{ else }}{{ $src }}{{ end }}" alt="{{ $alt }}" loading="lazy" decoding="async"{{ if $raster }} width="{{ $r.Width }}" height="{{ $r.Height }}"{{ end }}>{{ with $title }}<figcaption><h4>{{ . }}</h4></figcaption>{{ end }}</figure>

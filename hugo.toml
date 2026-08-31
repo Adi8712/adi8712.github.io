@@ -2,7 +2,6 @@ baseURL = "https://www.adityakgupta.in/"
 languageCode = "en-GB"
 title = "Tech Talks"
 theme = "rahul" # huge thanks to Rahul R. Nadkarni ;)
-canonifyURLs = true
 
 [markup]
   [markup.tableOfContents]
@@ -23,6 +22,7 @@ canonifyURLs = true
     github = "https://github.com/adityakgupta"
     linkedin = "https://linkedin.com/in/aditya-kgupta"
     twitter = "https://x.com/aditya_kgupta"
+    twitterHandle = "@aditya_kgupta"
     mainSections = ["posts"]
     description = "Things I read"
     designer = "https://rahulrn.framer.website/"
